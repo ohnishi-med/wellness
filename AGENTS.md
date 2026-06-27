@@ -5,7 +5,7 @@
 クリニックの自由診療（注射・点滴、サプリメント、美容等）を魅力的に伝えるための専用サイトです。
 Googleスプレッドシートからメニューや価格表データをGAS経由で動的ロードする構造を持ちます。
 
-- **本番URL**: 調整中（例: `https://private.mainichi.clinic/`）
+- **本番URL**: `https://wellness.mainichi.clinic/`
 - **デプロイ方式**: GitHub Actions + FTP Deploy
 
 ---
