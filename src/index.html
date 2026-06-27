@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自由診療（自費診療）のご案内 | 春日部大西毎日腎クリニック</title>
+  <meta name="description" content="春日部大西毎日腎クリニックの自由診療（自費診療）特設ページです。プラセンタ注射、高濃度ビタミンC点滴、各種サプリメント、スクリーニング検査など、皆様の健康増進と美しさをサポートするメニューをご用意しております。">
+  
+  <!-- SEO Meta Tags -->
+  <meta property="og:title" content="自由診療（自費診療）のご案内 | 春日部大西毎日腎クリニック">
+  <meta property="og:description" content="皆様の健康と若々しさをサポートするプラセンタ注射やビタミンC点滴などの自由診療メニュー。スプレッドシートから最新の価格と情報をリアルタイムに配信しています。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/images/exterior.jpg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/style.css?v=2026062701">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo_circle.svg">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <a href="#" class="logo-link">
+          <div class="logo-icon"></div>
+          <div class="logo-text">
+            <span class="logo-title">春日部大西毎日腎クリニック</span>
+            <span class="logo-subtitle">PRIVATE SERVICES</span>
+          </div>
+        </a>
+      </div>
+      <nav class="header-nav">
+        <a href="#welcome" class="nav-item">私たちの想い</a>
+        <a href="#menu-section" class="nav-item">診療メニュー</a>
+        <a href="#flow" class="nav-item">受診の流れ</a>
+        <a href="#contact" class="btn btn-header">お問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tagline">Premium Health & Beauty Care</span>
+      <h1 class="hero-title">健やかで、美しく、<br>輝きに満ちた人生のために。</h1>
+      <p class="hero-desc">私たちは、皆様の「いつまでも若々しくありたい」「活力を取り戻したい」という想いに寄り添い、確かな品質の自由診療（自費診療）メニューを提供いたします。</p>
+      <div class="hero-actions">
+        <a href="#menu-section" class="btn btn-hero">メニューを見る</a>
+        <a href="#contact" class="btn btn-hero-secondary">お問い合わせ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Welcome / Philosophy -->
+  <section id="welcome" class="welcome-section">
+    <div class="section-container">
+      <div class="welcome-grid">
+        <div class="welcome-text-area">
+          <span class="section-tag">Concept</span>
+          <h2 class="section-title-serif">幸福の体感を、すべての人へ。</h2>
+          <p class="concept-lead">一人ひとりに合わせた最適なヘルスケアを。</p>
+          <p class="concept-body">
+            当クリニックでは、保険診療の枠にとらわれず、皆様が心から満たされ、自分らしく健康的な生活を送るための自由診療メニューを取り揃えています。
+            厳選した薬剤と、徹底した安全管理のもとで、皆様の健康維持と美容ケアをサポートいたします。どうぞお気軽にご相談ください。
+          </p>
+        </div>
+        <div class="welcome-image-area">
+          <div class="concept-image-frame">
+            <div class="concept-image-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu-section" class="menu-section">
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-tag">Menu & Price</span>
+        <h2 class="section-title-serif">診療メニュー・価格表</h2>
+        <p class="section-desc">スプレッドシートから最新のメニューと価格情報をリアルタイムに取得しています。</p>
+      </div>
+
+      <!-- Category Tabs -->
+      <div class="category-tabs-container">
+        <div class="category-tabs" id="category-tabs">
+          <button class="tab-btn active" data-category="all">すべて</button>
+          <!-- Categories will be generated dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Menu Grid -->
+      <div class="menu-grid" id="menu-container">
+        <!-- Menu cards will be generated dynamically by JS -->
+        <div class="loading-skeleton">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flow Section -->
+  <section id="flow" class="flow-section">
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-tag">Flow</span>
+        <h2 class="section-title-serif">受診の流れ</h2>
+      </div>
+      
+      <div class="flow-grid">
+        <div class="flow-item">
+          <div class="flow-number">01</div>
+          <h3 class="flow-title">ご相談・ご予約</h3>
+          <p class="flow-desc">お電話または窓口にて、ご希望のメニューやご相談内容をお伝えください。事前にご予約いただくとスムーズです。</p>
+        </div>
+        <div class="flow-item">
+          <div class="flow-number">02</div>
+          <h3 class="flow-title">医師によるカウンセリング</h3>
+          <p class="flow-desc">初回受診時は、必ず医師による診察とカウンセリングを行います。体調や既往歴をお伺いし、最適なアプローチをご提案します。</p>
+        </div>
+        <div class="flow-item">
+          <div class="flow-number">03</div>
+          <h3 class="flow-title">施術・お渡し</h3>
+          <p class="flow-desc">注射・点滴などの処置は専用のクリーンなスペースで行います。サプリメントや処方薬はその場でお渡しいたします。</p>
+        </div>
+        <div class="flow-item">
+          <div class="flow-number">04</div>
+          <h3 class="flow-title">お会計</h3>
+          <p class="flow-desc">自由診療は全額自己負担（保険外）となります。明朗会計を徹底しておりますので、記載以上の追加費用はかかりません。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Access Section -->
+  <section id="contact" class="contact-section">
+    <div class="section-container">
+      <div class="contact-grid">
+        <!-- Contact Info -->
+        <div class="contact-info-card">
+          <span class="section-tag">Information</span>
+          <h2 class="section-title-serif">お問い合わせ・ご予約</h2>
+          <p class="contact-lead">自由診療は完全自己負担となります。施術に関してご不明な点やご不安なことがございましたら、まずはお気軽にお問い合わせください。</p>
+          
+          <div class="contact-details">
+            <div class="contact-item">
+              <span class="contact-label">電話番号</span>
+              <a href="tel:048-738-0707" class="contact-value tel-link">048-738-0707</a>
+              <span class="contact-note">※「自由診療の件で」とお伝えいただくとスムーズです。</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">所在地</span>
+              <span class="contact-value">〒344-0063 埼玉県春日部市緑町4丁目14-18</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">診療時間（自由診療対応）</span>
+              <span class="contact-value">9:00 〜 17:30 (日曜・祝日除く)</span>
+            </div>
+          </div>
+          
+          <div class="contact-actions">
+            <a href="tel:048-738-0707" class="btn btn-phone">電話で問い合わせる</a>
+          </div>
+        </div>
+        
+        <!-- Map Card -->
+        <div class="map-card">
+          <div class="map-container">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3228.6019553556093!2d139.75704987679354!3d35.98114407248981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601897e937d57c79%3A0xe543e3ff70058e17!2z5pil5pel6YOo5aSn6KW_5q-O5pel6Kex44Kv44Oq44OL44OD44Kv!5e0!3m2!1sja!2sjp!4v1716000000000!5m2!1sja!2sjp" 
+              width="100%" 
+              height="100%" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo-icon"></div>
+        <div class="footer-logo-text">春日部大西毎日腎クリニック 自由診療部門</div>
+      </div>
+      <p class="copyright">&copy; 2026 Kasukabe Ohnishi Mainichi Jin Clinic. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/app.js?v=2026062701"></script>
+</body>
+</html>
