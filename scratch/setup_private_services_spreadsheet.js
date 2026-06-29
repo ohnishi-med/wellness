@@ -1332,3 +1332,47 @@ function initSpreadsheet() {
   
   Logger.log('スプレッドシートの初期セットアップが完了しました！');
 }
+
+/**
+ * Webサイト（API）からのデータフェッチ用関数
+ * ウェブアプリとしてデプロイすることで、スプレッドシートの内容をJSON形式で配信します。
+ */
+function doGet() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  if (data.length <= 1) {
+    return ContentService.createTextOutput(JSON.stringify([]))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  var headers = data[0];
+  var statusIndex = headers.indexOf('status');
+  var idIndex = headers.indexOf('id');
+  var titleIndex = headers.indexOf('title');
+  var jsonArray = [];
+  
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    
+    // id または title が空の行はスキップ
+    if (idIndex !== -1 && !row[idIndex] && titleIndex !== -1 && !row[titleIndex]) continue;
+    
+    var obj = {};
+    for (var j = 0; j < headers.length; j++) {
+      var key = headers[j].toString().trim();
+      var val = row[j];
+      
+      // featured（チェックボックス）の論理値判定
+      if (key === 'featured') {
+        val = (val === true || val.toString().toUpperCase() === 'TRUE');
+      }
+      obj[key] = val;
+    }
+    jsonArray.push(obj);
+  }
+  
+  var output = ContentService.createTextOutput(JSON.stringify(jsonArray));
+  output.setMimeType(ContentService.MimeType.JSON);
+  return output;
+}
+
