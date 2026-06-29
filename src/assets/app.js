@@ -4,7 +4,7 @@
 
 // Google Apps Script (GAS) WebアプリのデプロイURL
 // スプレッドシート連携完了後にここにURLを設定します
-const GAS_API_URL = '';
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbywspkSLotKKwJbvO3PQmfMyxEyzEgkvkb2U2_cheE5Efl2zubFTj7od-bsqFKsQc8p/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
   initMenuFetcher();
