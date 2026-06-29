@@ -233,8 +233,8 @@ def parse():
         js_rows_str = json.dumps(gas_rows, ensure_ascii=False, indent=4)
         
         pattern = r'(var initialMenu = )\[[\s\S]*?\];'
-        replacement = f'var initialMenu = {js_rows_str};'
-        new_js_content = re.sub(pattern, replacement, js_content)
+        # lambda function prevents re.sub from expanding escape codes like \n
+        new_js_content = re.sub(pattern, lambda m: f"{m.group(1)}{js_rows_str};", js_content)
         
         with open(setup_js_path, 'w', encoding='utf-8') as f:
             f.write(new_js_content)
