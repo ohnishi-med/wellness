@@ -138,16 +138,24 @@ function renderMenu(menuItems, category) {
 
     const badgeHtml = item.badge ? `<span class="menu-badge">${item.badge}</span>` : '';
     
+    // 詳細のフォーマット処理
+    const detailContentHtml = formatDetail(item.detail);
     const detailHtml = item.detail ? `
       <button class="menu-accordion-btn">
-        <span>詳細を見る</span>
+        <span>詳細・副作用を見る</span>
         <span class="arrow">▼</span>
       </button>
       <div class="menu-detail-body">
         <div class="menu-detail-content">
-          <div class="detail-title">施術詳細・注意事項</div>
-          <div>${item.detail}</div>
+          ${detailContentHtml}
         </div>
+      </div>
+    ` : '';
+
+    // 広告ガイドライン対応: 価格とリスクの同一視野明示
+    const riskNoticeHtml = item.detail ? `
+      <div class="menu-risk-notice">
+        ※自由診療にはリスク・副作用があります。詳細は下記をご確認ください。
       </div>
     ` : '';
 
@@ -163,6 +171,7 @@ function renderMenu(menuItems, category) {
           <span class="price-label">料金</span>
           <span class="price-value">${item.price}</span>
         </div>
+        ${riskNoticeHtml}
       </div>
       ${detailHtml}
     `;
@@ -291,12 +300,6 @@ function setupGeneralAccordion() {
     header.addEventListener('click', () => {
       const isActive = wrapper.classList.contains('active');
       
-      // 他のカテゴリをすべて閉じる（オプション: お好みでアコーディオン風に一箇所のみ開く挙動に）
-      // wrappers.forEach(w => {
-      //   w.classList.remove('active');
-      //   w.querySelector('.general-cat-content').style.maxHeight = '0px';
-      // });
-
       if (!isActive) {
         wrapper.classList.add('active');
         content.style.maxHeight = content.scrollHeight + 'px';
@@ -307,3 +310,45 @@ function setupGeneralAccordion() {
     });
   });
 }
+
+/**
+ * 【詳細テキスト整形ヘルパー】
+ * 医療広告ガイドライン対応のため、副作用・リスク部分をパースして強調スタイルを当てはめます
+ */
+function formatDetail(detailText) {
+  if (!detailText) return '';
+  
+  const lines = detailText.split('\n');
+  let formattedHtml = '';
+  
+  lines.forEach(line => {
+    line = line.trim();
+    if (!line) return;
+    
+    // 「【タイトル】内容」の形式を検出
+    const match = line.match(/^【(.*?)】(.*)$/);
+    if (match) {
+      const title = match[1];
+      const body = match[2];
+      const isWarning = title.includes('副作用') || title.includes('注意') || title.includes('リスク') || title.includes('対象外');
+      const titleClass = isWarning ? 'detail-section-title warning' : 'detail-section-title';
+      const titleIcon = isWarning ? '⚠️ ' : '✦ ';
+      
+      formattedHtml += `
+        <div class="detail-section">
+          <div class="${titleClass}">${titleIcon}${title}</div>
+          <div class="detail-section-body">${body}</div>
+        </div>
+      `;
+    } else {
+      formattedHtml += `
+        <div class="detail-section">
+          <div class="detail-section-body">${line}</div>
+        </div>
+      `;
+    }
+  });
+  
+  return formattedHtml;
+}
+

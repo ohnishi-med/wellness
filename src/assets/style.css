@@ -884,3 +884,51 @@ a {
   }
 }
 
+/* Medical Advertising Guideline Compliance Styles */
+.menu-risk-notice {
+  font-size: 0.72rem;
+  color: var(--color-text-light);
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.4;
+}
+
+.menu-risk-notice::before {
+  content: '⚠️';
+  font-size: 0.75rem;
+}
+
+.detail-section {
+  margin-bottom: 12px;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section-title {
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.detail-section-title.warning {
+  color: #c0392b; /* A clear, readable red for warnings */
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.detail-section-body {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--color-text-light);
+  white-space: pre-wrap; /* Preserve formatting */
+}
+
+
