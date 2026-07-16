@@ -18,32 +18,49 @@ async function initMenuFetcher() {
   const generalContainer = document.getElementById('general-menu-container');
   if (!container) return;
 
-  let rawMenuItems = null;
+  let apiWellnessItems = null;
+  let apiGeneralItems = null;
 
-  // 1. まずGAS APIからの取得を試みる
+  // 1. GAS API からそれぞれのシートデータを個別に取得する
   if (GAS_API_URL) {
     try {
-      const response = await fetch(`${GAS_API_URL}?v=${new Date().getTime()}`);
-      if (response.ok) {
-        rawMenuItems = await response.json();
-        console.log('Successfully fetched menu data from GAS API.');
-      } else {
-        console.warn(`GAS API returned status ${response.status}. Falling back to local fallback JSON.`);
+      // 自由診療シートのフェッチ
+      const resWellness = await fetch(`${GAS_API_URL}?sheet=自由診療&v=${new Date().getTime()}`);
+      if (resWellness.ok) {
+        apiWellnessItems = await resWellness.json();
+      }
+      
+      // 健診メニューシートのフェッチ
+      const resGeneral = await fetch(`${GAS_API_URL}?sheet=健診メニュー&v=${new Date().getTime()}`);
+      if (resGeneral.ok) {
+        apiGeneralItems = await resGeneral.json();
       }
     } catch (error) {
       console.warn('Failed to fetch from GAS API. Falling back to local fallback JSON:', error);
     }
   }
 
-  // 2. GAS APIが未設定、または取得失敗した場合はローカルの menu_fallback.json を読み込む
-  if (!rawMenuItems) {
+  let wellnessItems = [];
+  let generalItems = [];
+
+  // 2. APIからの取得状況に応じてデータを使用、またはローカル fallback JSON で補完
+  if (apiWellnessItems && apiGeneralItems) {
+    wellnessItems = apiWellnessItems.filter(item => item.status !== '非表示');
+    generalItems = apiGeneralItems.filter(item => item.status !== '非表示');
+    console.log('Successfully loaded menu data from GAS API.');
+  } else {
+    // API取得失敗、または一部データ欠損時は fallback JSON を読み込む
     try {
       const response = await fetch(`data/menu_fallback.json?v=${new Date().getTime()}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch local fallback menu: ${response.status}`);
       }
-      rawMenuItems = await response.json();
-      console.log('Successfully fetched menu data from local fallback JSON.');
+      const fallbackItems = await response.json();
+      const activeFallback = fallbackItems.filter(item => item.status !== '非表示');
+      
+      wellnessItems = activeFallback.filter(item => item.group !== '一般健診・書類');
+      generalItems = activeFallback.filter(item => item.group === '一般健診・書類');
+      console.log('Loaded menu data from local fallback JSON.');
     } catch (error) {
       console.error('Error fetching fallback menu:', error);
       container.innerHTML = `
@@ -57,13 +74,6 @@ async function initMenuFetcher() {
       return;
     }
   }
-
-  // 3. 表示中ステータスのものだけをフィルタリング
-  const activeItems = rawMenuItems.filter(item => item.status !== '非表示');
-
-  // 4. group ごとにデータを分離
-  const generalItems = activeItems.filter(item => item.group === '一般健診・書類');
-  const wellnessItems = activeItems.filter(item => item.group !== '一般健診・書類');
 
   // ① 自由診療（美容・点滴等）エリアの描画
   setupGroupTabs(wellnessItems);
