@@ -101,8 +101,18 @@ def determine_group_and_status(title, category):
         if kw in title:
             return "非掲載", "非表示"
             
+    # タミフル予防薬は検診メニュー（一般健診・書類）に組み込み表示
+    if "タミフル" in title:
+        return "一般健診・書類", "表示中"
+        
+    # 予防接種も検診メニュー（一般健診・書類）に組み込む
+    if category == "予防接種":
+        if "定期" in title or "免除" in title:
+            return "一般健診・書類", "非表示"
+        return "一般健診・書類", "表示中"
+            
     # 自由診療系
-    aesthetic_categories = ["美容注射・点滴", "自己注射", "内服薬・サプリメント", "予防接種"]
+    aesthetic_categories = ["美容注射・点滴", "自己注射", "内服薬・サプリメント"]
     if category in aesthetic_categories:
         if "定期" in title or "免除" in title:
             return "一般健診・書類", "非表示"
