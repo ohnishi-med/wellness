@@ -15,13 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 async function initMenuFetcher() {
   const container = document.getElementById('menu-container');
-  const generalContainer = document.getElementById('general-menu-container');
   if (!container) return;
 
   let apiWellnessItems = null;
-  let apiGeneralItems = null;
 
-  // 1. GAS API からそれぞれのシートデータを個別に取得する
+  // 1. GAS API から自由診療シートのデータを個別に取得する
   if (GAS_API_URL) {
     try {
       // 自由診療シートのフェッチ
@@ -29,24 +27,16 @@ async function initMenuFetcher() {
       if (resWellness.ok) {
         apiWellnessItems = await resWellness.json();
       }
-      
-      // 健診メニューシートのフェッチ
-      const resGeneral = await fetch(`${GAS_API_URL}?sheet=健診メニュー&v=${new Date().getTime()}`);
-      if (resGeneral.ok) {
-        apiGeneralItems = await resGeneral.json();
-      }
     } catch (error) {
       console.warn('Failed to fetch from GAS API. Falling back to local fallback JSON:', error);
     }
   }
 
   let wellnessItems = [];
-  let generalItems = [];
 
   // 2. APIからの取得状況に応じてデータを使用、またはローカル fallback JSON で補完
-  if (apiWellnessItems && apiGeneralItems) {
+  if (apiWellnessItems) {
     wellnessItems = apiWellnessItems.filter(item => item.status !== '非表示');
-    generalItems = apiGeneralItems.filter(item => item.status !== '非表示');
     console.log('Successfully loaded menu data from GAS API.');
   } else {
     // API取得失敗、または一部データ欠損時は fallback JSON を読み込む
@@ -59,7 +49,6 @@ async function initMenuFetcher() {
       const activeFallback = fallbackItems.filter(item => item.status !== '非表示');
       
       wellnessItems = activeFallback.filter(item => item.group !== '一般健診・書類');
-      generalItems = activeFallback.filter(item => item.group === '一般健診・書類');
       console.log('Loaded menu data from local fallback JSON.');
     } catch (error) {
       console.error('Error fetching fallback menu:', error);
@@ -68,9 +57,6 @@ async function initMenuFetcher() {
           メニュー情報の読み込みに失敗しました。お電話にて直接お問い合わせください。
         </div>
       `;
-      if (generalContainer) {
-        generalContainer.innerHTML = '';
-      }
       return;
     }
   }
@@ -78,9 +64,6 @@ async function initMenuFetcher() {
   // ① 自由診療（美容・点滴等）エリアの描画
   setupGroupTabs(wellnessItems);
   renderMenu(wellnessItems, 'all');
-
-  // ② 一般健診・検査・書類代エリアの描画
-  renderGeneralMenu(generalItems);
 }
 
 /**
@@ -195,76 +178,7 @@ function renderMenu(menuItems, group) {
 /**
  * 2. 一般健診・検査・書類代のレンダリング（アコーディオン＋料金テーブル）
  */
-function renderGeneralMenu(generalItems) {
-  const container = document.getElementById('general-menu-container');
-  if (!container) return;
 
-  container.innerHTML = ''; // クリア
-
-  if (generalItems.length === 0) {
-    container.innerHTML = `
-      <div style="text-align: center; padding: 40px; color: var(--color-text-light);">
-        現在掲載可能な項目はありません。
-      </div>
-    `;
-    return;
-  }
-
-  // カテゴリごとにグループ化
-  const groupedItems = {};
-  generalItems.forEach(item => {
-    if (!groupedItems[item.category]) {
-      groupedItems[item.category] = [];
-    }
-    groupedItems[item.category].push(item);
-  });
-
-  // カテゴリ順にアコーディオンを生成
-  const categories = Object.keys(groupedItems);
-  categories.forEach(category => {
-    const items = groupedItems[category];
-    const wrapper = document.createElement('div');
-    wrapper.className = 'general-cat-wrapper';
-
-    // テーブルの中身（行）を作成
-    let tableRows = '';
-    items.forEach(item => {
-      tableRows += `
-        <tr>
-          <td>
-            <div style="font-weight: 600; color: var(--color-text);">${item.title}</div>
-            ${item.description ? `<div style="font-size: 0.8rem; color: var(--color-text-light); margin-top: 4px;">${item.description}</div>` : ''}
-          </td>
-          <td class="price-cell">${item.price}</td>
-        </tr>
-      `;
-    });
-
-    wrapper.innerHTML = `
-      <button class="general-cat-header">${category}</button>
-      <div class="general-cat-content">
-        <div class="general-table-container">
-          <table class="general-table">
-            <thead>
-              <tr>
-                <th>項目名 / 概要</th>
-                <th style="text-align: right;">料金（自費）</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${tableRows}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    `;
-
-    container.appendChild(wrapper);
-  });
-
-  // 一般自費アコーディオンのトグル制御イベント設定
-  setupGeneralAccordion();
-}
 
 /**
  * 自由診療アコーディオンの開閉トグル
@@ -297,29 +211,7 @@ function setupAccordion() {
   });
 }
 
-/**
- * 一般自費アコーディオンの開閉トグル
- */
-function setupGeneralAccordion() {
-  const wrappers = document.querySelectorAll('.general-cat-wrapper');
-  wrappers.forEach(wrapper => {
-    const header = wrapper.querySelector('.general-cat-header');
-    const content = wrapper.querySelector('.general-cat-content');
-    if (!header || !content) return;
 
-    header.addEventListener('click', () => {
-      const isActive = wrapper.classList.contains('active');
-      
-      if (!isActive) {
-        wrapper.classList.add('active');
-        content.style.maxHeight = content.scrollHeight + 'px';
-      } else {
-        wrapper.classList.remove('active');
-        content.style.maxHeight = '0px';
-      }
-    });
-  });
-}
 
 /**
  * 【詳細テキスト整形ヘルパー】

@@ -101,15 +101,11 @@ def determine_group_and_status(title, category):
         if kw in title:
             return "非掲載", "非表示"
             
-    # タミフル予防薬は検診メニュー（一般健診・書類）に組み込み表示
+    # タミフルや予防接種は、この自由診療専用ページでは取り扱わないため非掲載にする
     if "タミフル" in title:
-        return "一般健診・書類", "表示中"
-        
-    # 予防接種も検診メニュー（一般健診・書類）に組み込む
+        return "非掲載", "非表示"
     if category == "予防接種":
-        if "定期" in title or "免除" in title:
-            return "一般健診・書類", "非表示"
-        return "一般健診・書類", "表示中"
+        return "非掲載", "非表示"
 
     # 新しい自由診療のグループ分けマッピング
     # ダイエット
@@ -138,15 +134,11 @@ def determine_group_and_status(title, category):
     aesthetic_categories = ["美容注射・点滴", "自己注射", "内服薬・サプリメント"]
     if category in aesthetic_categories:
         if "定期" in title or "免除" in title:
-            return "一般健診・書類", "非表示"
+            return "非掲載", "非表示"
         return "健康増進", "表示中"
         
-    # 一般健診・保険付随の自費
-    general_categories = ["健康診断", "血液検査", "画像・生理検査", "書類代", "診察料"]
-    if category in general_categories:
-        return "一般健診・書類", "表示中"
-        
-    return "一般健診・書類", "表示中"
+    # 一般健診・保険付随の自費はすべて非表示にする
+    return "非掲載", "非表示"
 
 def parse():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
