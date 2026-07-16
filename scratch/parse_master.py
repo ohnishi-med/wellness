@@ -110,13 +110,36 @@ def determine_group_and_status(title, category):
         if "定期" in title or "免除" in title:
             return "一般健診・書類", "非表示"
         return "一般健診・書類", "表示中"
+
+    # 新しい自由診療のグループ分けマッピング
+    # ダイエット
+    diet_keywords = ["メトホルミン", "リベルサス", "マンジャロ"]
+    for kw in diet_keywords:
+        if kw in title:
+            return "ダイエット", "表示中"
             
-    # 自由診療系
+    # 増毛
+    if "デュタステリド" in title:
+        return "増毛", "表示中"
+        
+    # 美白
+    whitening_keywords = ["肝斑", "美白セット", "アスコルビン酸", "トラネキサム酸", "ビタミンＣ", "美白注射"]
+    for kw in whitening_keywords:
+        if kw in title:
+            return "美白", "表示中"
+            
+    # 健康増進
+    health_keywords = ["αリポ酸", "アリナミン", "ビオチン", "エルカルチン", "プラセンタ", "白玉"]
+    for kw in health_keywords:
+        if kw in title:
+            return "健康増進", "表示中"
+            
+    # 自由診療カテゴリに属するがキーワードに引っかからなかったものは一旦健康増進にしておく
     aesthetic_categories = ["美容注射・点滴", "自己注射", "内服薬・サプリメント"]
     if category in aesthetic_categories:
         if "定期" in title or "免除" in title:
             return "一般健診・書類", "非表示"
-        return "自由診療", "表示中"
+        return "健康増進", "表示中"
         
     # 一般健診・保険付随の自費
     general_categories = ["健康診断", "血液検査", "画像・生理検査", "書類代", "診察料"]

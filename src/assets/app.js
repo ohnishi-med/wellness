@@ -62,11 +62,11 @@ async function initMenuFetcher() {
   const activeItems = rawMenuItems.filter(item => item.status !== '非表示');
 
   // 4. group ごとにデータを分離
-  const wellnessItems = activeItems.filter(item => item.group === '自由診療');
   const generalItems = activeItems.filter(item => item.group === '一般健診・書類');
+  const wellnessItems = activeItems.filter(item => item.group !== '一般健診・書類');
 
   // ① 自由診療（美容・点滴等）エリアの描画
-  setupCategoryTabs(wellnessItems);
+  setupGroupTabs(wellnessItems);
   renderMenu(wellnessItems, 'all');
 
   // ② 一般健診・検査・書類代エリアの描画
@@ -74,24 +74,24 @@ async function initMenuFetcher() {
 }
 
 /**
- * カテゴリタブの生成（自由診療用）
+ * グループタブの生成（自由診療用）
  */
-function setupCategoryTabs(menuItems) {
+function setupGroupTabs(menuItems) {
   const tabsContainer = document.getElementById('category-tabs');
   if (!tabsContainer) return;
 
-  // 既存の動的追加ボタン（「すべて」以外）をクリア
+  // 既存 of 動的追加ボタン（「すべて」以外）をクリア
   const existingBtns = tabsContainer.querySelectorAll('.tab-btn:not([data-category="all"])');
   existingBtns.forEach(btn => btn.remove());
 
-  // 重複しないカテゴリを抽出
-  const categories = [...new Set(menuItems.map(item => item.category))].filter(Boolean);
+  // 重複しないグループを抽出 (ダイエット、増毛、美白、健康増進等)
+  const groups = [...new Set(menuItems.map(item => item.group))].filter(Boolean);
 
-  categories.forEach(category => {
+  groups.forEach(group => {
     const btn = document.createElement('button');
     btn.className = 'tab-btn';
-    btn.setAttribute('data-category', category);
-    btn.textContent = category;
+    btn.setAttribute('data-category', group);
+    btn.textContent = group;
     tabsContainer.appendChild(btn);
   });
 
@@ -102,8 +102,8 @@ function setupCategoryTabs(menuItems) {
       tabButtons.forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
 
-      const selectedCategory = button.getAttribute('data-category');
-      renderMenu(menuItems, selectedCategory);
+      const selectedGroup = button.getAttribute('data-category');
+      renderMenu(menuItems, selectedGroup);
     });
   });
 }
@@ -111,13 +111,13 @@ function setupCategoryTabs(menuItems) {
 /**
  * 自由診療メニュー（カード形式）のレンダリング
  */
-function renderMenu(menuItems, category) {
+function renderMenu(menuItems, group) {
   const container = document.getElementById('menu-container');
   if (!container) return;
 
-  const filteredItems = category === 'all' 
+  const filteredItems = group === 'all' 
     ? menuItems 
-    : menuItems.filter(item => item.category === category);
+    : menuItems.filter(item => item.group === group);
 
   container.innerHTML = ''; // クリア
 
