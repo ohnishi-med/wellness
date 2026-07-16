@@ -141,14 +141,10 @@ function renderMenu(menuItems, group) {
       <div class="menu-detail-body">
         <div class="menu-detail-content">
           ${detailContentHtml}
+          <div class="menu-risk-notice-bottom" style="font-size: 0.75rem; color: var(--color-text-light); margin-top: 16px; border-top: 1px dashed var(--color-border); padding-top: 12px; font-weight: 500;">
+            ※自由診療にはリスク・副作用があります。上記のご案内をよくご確認ください。
+          </div>
         </div>
-      </div>
-    ` : '';
-
-    // 広告ガイドライン対応: 価格とリスクの同一視野明示
-    const riskNoticeHtml = item.detail ? `
-      <div class="menu-risk-notice">
-        ※自由診療にはリスク・副作用があります。詳細は下記をご確認ください。
       </div>
     ` : '';
 
@@ -164,7 +160,6 @@ function renderMenu(menuItems, group) {
           <span class="price-label">料金</span>
           <span class="price-value">${item.price}</span>
         </div>
-        ${riskNoticeHtml}
       </div>
       ${detailHtml}
     `;
