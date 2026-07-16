@@ -19,6 +19,7 @@
 - GASが一時的に応答しない場合のフォールバックとして、ローカルの `data/menu_fallback.json` からメニュー情報を読み込んで表示する。
 
 ### 運用・データ構造（スプレッドシート）
+- **管理用スプレッドシート**: [自由診療メニュー管理スプレッドシート](https://docs.google.com/spreadsheets/d/1PxPhCTPaV_XMOF3KV968igCD0tLjvygFuz-w3ByVzlo/edit?gid=0#gid=0)
 - カラム構成: `status`, `id`, `category`, `title`, `price`, `description`, `detail`, `featured`, `badge`
 - `status` が `表示中` のものだけをサイトに表示。
 - `featured` にチェックを入れたものは「おすすめ」マークを付与して強調表示。

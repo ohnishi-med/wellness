@@ -6,6 +6,8 @@
 Googleスプレッドシートからメニューや価格表データをGAS経由で動的ロードする構造を持ちます。
 
 - **本番URL**: `https://wellness.mainichi.clinic/`
+- **管理用スプレッドシート**: [自由診療メニュー管理スプレッドシート](https://docs.google.com/spreadsheets/d/1PxPhCTPaV_XMOF3KV968igCD0tLjvygFuz-w3ByVzlo/edit?gid=0#gid=0)
+- **データ配信GAS Web App**: `https://script.google.com/macros/s/AKfycbywspkSLotKKwJbvO3PQmfMyxEyzEgkvkb2U2_cheE5Efl2zubFTj7od-bsqFKsQc8p/exec`
 - **デプロイ方式**: GitHub Actions + FTP Deploy
 
 ---
