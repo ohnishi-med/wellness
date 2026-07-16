@@ -96,7 +96,33 @@ a {
   transform: translateY(-2px);
 }
 
+.btn-header-reserve {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  margin-right: 12px;
+}
+
+.btn-header-reserve:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
 .btn-phone {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  width: 100%;
+  padding: 14px;
+  font-size: 1.05rem;
+}
+
+.btn-phone:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-reserve-contact {
   background-color: var(--color-primary);
   color: #ffffff;
   width: 100%;
@@ -104,8 +130,15 @@ a {
   font-size: 1.05rem;
 }
 
-.btn-phone:hover {
+.btn-reserve-contact:hover {
   background-color: var(--color-primary-dark);
+}
+
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 /* Layout Container */
